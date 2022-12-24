@@ -7,6 +7,7 @@ extern "C"
 }
 
 using ::testing::Return;
+using ::testing::InSequence;
 
 class HeartbeatTest : public testing::Test
 {
@@ -36,4 +37,27 @@ TEST_F(HeartbeatTest, SignalIsLongerThen110)
         heartbeat_check();
     }
     EXPECT_EQ(1, heartbeat_check());
+}
+
+TEST_F(HeartbeatTest, ThreeToogleSignal)
+{
+    MockGPIO mock;
+
+    InSequence s;
+    EXPECT_CALL(mock, heartbeat_pin_get())
+        .Times(10)
+        .WillRepeatedly(Return(GPIO_LOW));
+    EXPECT_CALL(mock, heartbeat_pin_get())
+        .Times(10)
+        .WillRepeatedly(Return(GPIO_HIGH));
+    EXPECT_CALL(mock, heartbeat_pin_get())
+        .WillRepeatedly(Return(GPIO_LOW));
+
+    gpio_mock_init(&mock);
+
+    for (int i=0; i<30; i++)
+    {
+        heartbeat_check();
+    }
+    EXPECT_EQ(0, heartbeat_check());
 }
