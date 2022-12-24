@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
 
-TEST(HeartbeatTest, InitTest)
+extern "C"
 {
-    ADD_FAILURE();
+#include "heartbeat.h"
+}
+
+TEST(HeartbeatTest, SignalIsLongerThen110)
+{
+    EXPECT_EQ(1, heartbeat_check());
 }
