@@ -27,6 +27,7 @@ include_directories(${INCLUDE_DIR})
 add_executable(
     ${CMAKE_PROJECT_NAME}
     ../src/heartbeat.c
+    heartbeat_test.cpp
 )
 
 target_link_libraries(

@@ -13,6 +13,18 @@
             "group": "build",
             "presentation": {},
             "problemMatcher": []
+        },
+
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "./heartbeat_project.exe",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/test/build"},
+            "group": "build",
+            "presentation": {},
+            "problemMatcher": []
         }
     ]
 }
