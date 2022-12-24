@@ -32,11 +32,11 @@ TEST_F(HeartbeatTest, SignalIsLongerThen110)
         .WillRepeatedly(Return(GPIO_LOW));
     gpio_mock_init(&mock);
 
-    for (int i=0; i<11; i++)
+    for (int i=0; i<12; i++)
     {
         heartbeat_check();
     }
-    EXPECT_EQ(1, heartbeat_check());
+    EXPECT_EQ(1, heartbeat_check_alarm_state());
 }
 
 TEST_F(HeartbeatTest, ThreeToogleSignal)
@@ -59,5 +59,5 @@ TEST_F(HeartbeatTest, ThreeToogleSignal)
     {
         heartbeat_check();
     }
-    EXPECT_EQ(0, heartbeat_check());
+    EXPECT_EQ(0, heartbeat_check_alarm_state());
 }
