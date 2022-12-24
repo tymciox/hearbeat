@@ -8,7 +8,22 @@ extern "C"
 
 using ::testing::Return;
 
-TEST(HeartbeatTest, SignalIsLongerThen110)
+class HeartbeatTest : public testing::Test
+{
+    protected:
+
+    void SetUp() override
+    {
+        heartbeat_init();
+    }
+
+    void TearDown() override
+    {
+
+    }
+};
+
+TEST_F(HeartbeatTest, SignalIsLongerThen110)
 {
     MockGPIO mock;
 
@@ -16,8 +31,9 @@ TEST(HeartbeatTest, SignalIsLongerThen110)
         .WillRepeatedly(Return(GPIO_LOW));
     gpio_mock_init(&mock);
 
-    for (int i=0; i<12; i++)
+    for (int i=0; i<11; i++)
     {
-        EXPECT_EQ(1, heartbeat_check());
+        heartbeat_check();
     }
+    EXPECT_EQ(1, heartbeat_check());
 }
