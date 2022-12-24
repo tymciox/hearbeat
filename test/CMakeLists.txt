@@ -17,9 +17,13 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-set (INCLUDE_DIR 
+set(INCLUDE_DIR 
 ../src
 .
+)
+
+set(SRC_MOCK_DIR
+mock_gpio.cpp
 )
 
 include_directories(${INCLUDE_DIR})
@@ -28,6 +32,7 @@ add_executable(
     ${CMAKE_PROJECT_NAME}
     ../src/heartbeat.c
     heartbeat_test.cpp
+    ${SRC_MOCK_DIR}
 )
 
 target_link_libraries(
