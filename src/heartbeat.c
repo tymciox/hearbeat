@@ -17,6 +17,7 @@ void heartbeat_check(void)
 
     if (current_state != previosu_state)
     {
+        if (signal_cnt < 9) alarm = 1;
         signal_cnt = 0;
         previosu_state = current_state;
     }

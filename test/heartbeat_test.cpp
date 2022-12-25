@@ -61,3 +61,26 @@ TEST_F(HeartbeatTest, ThreeToogleSignal)
     }
     EXPECT_EQ(0, heartbeat_check_alarm_state());
 }
+
+TEST_F(HeartbeatTest, SignalShorterThan90ms)
+{
+    MockGPIO mock;
+
+    InSequence s;
+    EXPECT_CALL(mock, heartbeat_pin_get())
+        .Times(10)
+        .WillRepeatedly(Return(GPIO_LOW));
+    EXPECT_CALL(mock, heartbeat_pin_get())
+        .Times(8)
+        .WillRepeatedly(Return(GPIO_HIGH));
+    EXPECT_CALL(mock, heartbeat_pin_get())
+        .WillRepeatedly(Return(GPIO_LOW));
+
+    gpio_mock_init(&mock);
+
+    for (int i=0; i<28; i++)
+    {
+        heartbeat_check();
+    }
+    EXPECT_EQ(1, heartbeat_check_alarm_state());
+}
